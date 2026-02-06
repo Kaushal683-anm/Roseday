@@ -380,80 +380,81 @@
   </div>
 
   <script>
-    // ✅ Personalize these:
-    const FROM_NAME = "Anmol";      // change if you want
-    const TO_NAME   = "My Friend";  // put their name
+  // ✅ Personalize these:
+  const FROM_NAME = "Anmol";
+  const TO_NAME   = "Nikki";
 
-    // Update small text using your names
-    const subText = document.getElementById("subText");
-    subText.textContent = `Hey ${TO_NAME}! This rose is from ${FROM_NAME} — may your day be filled with smiles and love.`;
+  // Update small text using your names
+  const subText = document.getElementById("subText");
+  subText.textContent = `Hey ${TO_NAME}! This rose is from ${FROM_NAME} — may your day be filled with smiles and love.`;
 
-    const modalMsg = document.getElementById("modalMsg");
-    modalMsg.textContent = `🌹 Hey ${TO_NAME}! A beautiful rose for you from ${FROM_NAME}. May your day be full of love, joy, and sweet moments.`;
+  const modalMsg = document.getElementById("modalMsg");
+  modalMsg.textContent = `🌹 Hey ${TO_NAME}! A beautiful rose for you from ${FROM_NAME}. May your day be full of love, joy, and sweet moments.`;
 
-    // Show today's friendly label (optional)
-    const todayPill = document.getElementById("todayPill");
-    const now = new Date();
-    todayPill.textContent = `Happy Rose Day 💖 • ${now.toLocaleDateString()}`;
+  // Show today's friendly label (optional)
+  const todayPill = document.getElementById("todayPill");
+  const now = new Date();
+  todayPill.textContent = `Happy Rose Day 💖 • ${now.toLocaleDateString()}`;
 
-    // Falling roses generator
-    const rosesLayer = document.getElementById("roses");
+  // Falling roses generator
+  const rosesLayer = document.getElementById("roses");
 
-    function dropRoses(count = 18) {
-      for (let i = 0; i < count; i++) {
-        const r = document.createElement("div");
-        r.className = "rose";
-        r.textContent = "🌹";
-        r.style.left = Math.random() * 100 + "vw";
-        r.style.animationDuration = (Math.random() * 2.5 + 2.5) + "s";
-        r.style.fontSize = (Math.random() * 18 + 16) + "px";
-        r.style.opacity = (Math.random() * 0.35 + 0.6);
-        r.style.transform = `translateY(-40px) rotate(${Math.random()*180}deg)`;
-        rosesLayer.appendChild(r);
+  function dropRoses(count = 18) {
+    for (let i = 0; i < count; i++) {
+      const r = document.createElement("div");
+      r.className = "rose";
+      r.textContent = "🌹";
+      r.style.left = Math.random() * 100 + "vw";
+      r.style.animationDuration = (Math.random() * 2.5 + 2.5) + "s";
+      r.style.fontSize = (Math.random() * 18 + 16) + "px";
+      r.style.opacity = (Math.random() * 0.35 + 0.6);
+      r.style.transform = `translateY(-40px) rotate(${Math.random()*180}deg)`;
+      rosesLayer.appendChild(r);
 
-        // remove after animation
-        r.addEventListener("animationend", () => r.remove());
-      }
+      // remove after animation
+      r.addEventListener("animationend", () => r.remove());
     }
+  }
 
-    // Modal handlers
-    const backdrop = document.getElementById("modalBackdrop");
-    const openBtn = document.getElementById("sendRoseBtn");
-    const closeBtn = document.getElementById("closeModal");
-    const closeBtn2 = document.getElementById("closeModal2");
-    const moreBtn = document.getElementById("moreRosesBtn");
+  // Modal handlers
+  const backdrop = document.getElementById("modalBackdrop");
+  const openBtn = document.getElementById("sendRoseBtn");
+  const closeBtn = document.getElementById("closeModal");
+  const closeBtn2 = document.getElementById("closeModal2");
+  const moreBtn = document.getElementById("moreRosesBtn");
 
-    function openModal(){
-      backdrop.style.display = "flex";
-      backdrop.setAttribute("aria-hidden", "false");
-      dropRoses(22);
+  function openModal(){
+    backdrop.style.display = "flex";
+    backdrop.setAttribute("aria-hidden", "false");
+    dropRoses(22);
+  }
+  function closeModal(){
+    backdrop.style.display = "none";
+    backdrop.setAttribute("aria-hidden", "true");
+  }
+
+  openBtn.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", closeModal);
+  closeBtn2.addEventListener("click", closeModal);
+  backdrop.addEventListener("click", (e) => { if(e.target === backdrop) closeModal(); });
+  moreBtn.addEventListener("click", () => dropRoses(35));
+
+  // Copy link button (works great for WhatsApp share)
+  const copyBtn = document.getElementById("copyLinkBtn");
+  copyBtn.addEventListener("click", async () => {
+    try{
+      await navigator.clipboard.writeText(window.location.href);
+      copyBtn.textContent = "Copied ✅";
+      setTimeout(() => copyBtn.textContent = "Copy Link 🔗", 1400);
+    }catch(err){
+      alert("Copy failed. Please copy the URL from the address bar.");
     }
-    function closeModal(){
-      backdrop.style.display = "none";
-      backdrop.setAttribute("aria-hidden", "true");
-    }
+  });
 
-    openBtn.addEventListener("click", openModal);
-    closeBtn.addEventListener("click", closeModal);
-    closeBtn2.addEventListener("click", closeModal);
-    backdrop.addEventListener("click", (e) => { if(e.target === backdrop) closeModal(); });
-    moreBtn.addEventListener("click", () => dropRoses(35));
-
-    // Copy link button (works great for WhatsApp share)
-    const copyBtn = document.getElementById("copyLinkBtn");
-    copyBtn.addEventListener("click", async () => {
-      try{
-        await navigator.clipboard.writeText(window.location.href);
-        copyBtn.textContent = "Copied ✅";
-        setTimeout(() => copyBtn.textContent = "Copy Link 🔗", 1400);
-      }catch(err){
-        alert("Copy failed. Please copy the URL from the address bar.");
-      }
-    });
-
-    // Add a gentle rose shower on load
-    setTimeout(() => dropRoses(10), 600);
-  </script>
+  // Add a gentle rose shower on load
+  setTimeout(() => dropRoses(10), 600);
+</script>
 </body>
 </html>
 ``
+
